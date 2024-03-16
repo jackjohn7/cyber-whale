@@ -1,0 +1,43 @@
+name: Test python package
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+  push:
+    branches:
+      - 'add-*'
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out code
+      - uses: actions/checkout@v4
+      # Set python up for our tests
+      - name: Set up Python 3.X
+        uses: actions/setup-python@v4
+        with:
+          # specifies that tests should be ran with Python 3
+          python-version: '3.x'
+          # specifies that pip packages should be cached
+          cache: 'pip'
+      # Simply outputs the python version
+      - name: Print version (for debugging)
+        run: python -c "import sys; print(sys.version)"
+      # Installs dependencies from requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      # Runs all tests
+      - name: Test with Pytest
+        run: pytest
+      # Checks for silly, preventable mistakes
+      - name: Lint with Ruff
+        run: ruff check
+        continue-on-error: true

@@ -21,11 +21,15 @@ Install dependencies: `pip install -r requirements.txt`
 
 To test our code, you can simply run `pytest` to run any defined unit tests.
 
+![](assets/runtests.gif)
+
 To view test coverage, you can execute the following:
 
 ```bash
 pytest --doctest-modules --cov=. --cov-report=html
 ```
+
+![](assets/cov.gif)
 
 You will find the generated HTML report in `htmlcov/index.html`.
 

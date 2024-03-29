@@ -17,6 +17,8 @@ project root.
 
 Install dependencies: `pip install -r requirements.txt`
 
+![](assets/deps.gif)
+
 To test our code, you can simply run `pytest` to run any defined unit tests.
 
 To view test coverage, you can execute the following:

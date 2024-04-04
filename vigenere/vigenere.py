@@ -28,7 +28,7 @@ def encrypt(src: str, key: str) -> str:
 
 def decrypt(src: str, key: str) -> str:
     """
-    Using the specified key, dencrypt source text using vigenere cipher.
+    Using the specified key, decrypt source text using vigenere cipher.
 
     The if the key contains non-alpha characters, it will fail (for now)
     """

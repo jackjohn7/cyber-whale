@@ -14,13 +14,13 @@ def test_decrypt():
 
 def test_bijectivity():
     inputs: list[tuple[str, str]] = [
-        ("apple", "passkey"),
-        ("banana", "supersecret"),
-        ("ankunda", "kiremire"),
-        ("andrey", "timofeyev"),
-        ("whales", "cyber"),
-        ("whales are goated", "definitely"),
-        ("whales will win cyberstorm", "withoutasingledoubt"),
+        ("Apple", "passkey"),
+        ("baNana$$", "supersecret"),
+        ("ankunda@)", "kiremire"),
+        ("andrey2#", "timofeyev"),
+        ("whales2", "cyber"),
+        ("whales are goated123", "definitely"),
+        ("whale$ wi1l win cyb3rst0rm!", "withoutasingledoubt"),
     ]
 
     for (raw, key) in inputs:

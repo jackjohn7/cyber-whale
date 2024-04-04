@@ -18,7 +18,7 @@ def encrypt_v0_2(src: str, key: str) -> str:
             k = ord(key[char_count % len(key)])
             k_offset = 65 if chr(k).isupper() else 97
             k -= k_offset
-            nc = (ord(c)+m_offset + k) % 26 - m_offset # new character
+            nc = (ord(c)-m_offset + k) % 26 - m_offset # new character
             result += chr(nc)
             char_count += 1
         else:
@@ -44,7 +44,7 @@ def decrypt(src: str, key: str) -> str:
                 k = ord(key[char_count % len(key)])
                 k_offset = 65 if chr(k).isupper() else 97
                 k -= k_offset
-                nc = (ord(c)-m_offset + k) % 26 - m_offset # new character
+                nc = (ord(c)+m_offset + k) % 26 - m_offset # new character
                 result += chr(nc)
                 char_count += 1
             else:

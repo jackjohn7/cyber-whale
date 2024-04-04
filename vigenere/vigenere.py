@@ -26,6 +26,32 @@ def encrypt_v0_2(src: str, key: str) -> str:
             result += c
     return result
 
+def decrypt(src: str, key: str) -> str:
+    """
+    Using the specified key, dencrypt source text using vigenere cipher.
+
+    The if the key contains non-alpha characters, it will fail (for now)
+    """
+    result = ""
+    char_count = 0 # using count instead of index cause non-alpha cause problems
+    for c in src:
+            if c.isalpha():
+                # offset is used so we can treat values as being
+                #  characters represented 0-25 rather than raw ascii.
+                #  It also makes it easier to treat capital and lowercase
+                #  the same.
+                m_offset = 65 if c.isupper() else 97
+                k = ord(key[char_count % len(key)])
+                k_offset = 65 if chr(k).isupper() else 97
+                k -= k_offset
+                nc = (ord(c)-m_offset + k) % 26 - m_offset # new character
+                result += chr(nc)
+                char_count += 1
+            else:
+                # for now, do not alter numbers and symbols
+                result += c
+    return result
+
 def encrypt(plain_text, key):
     # The cipher variable will store the final encrypted key
     cipher = ""
@@ -113,6 +139,6 @@ if __name__ == "__main__":
     if args.encrypt is not None:
         print(encrypt_v0_2(stdin.read(), args.encrypt))
     elif args.decrypt is not None:
-        print("decrypt functionality not yet implemented")
+        print(decrypt(stdin.read(), args.decrypt))
 
 

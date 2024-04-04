@@ -41,6 +41,7 @@ def toASCII(segments):
 ### MAIN ###
 if __name__ == "__main__":
     contents = read_file()
+    contents.strip()
     num = numBits(contents)
     if num != None:
         segment_list = segments(contents, num)

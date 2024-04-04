@@ -11,3 +11,17 @@ def test_decrypt():
     assert decrypt("ztzyul", "hello") == "sponge"
     assert decrypt("eqsdlyq lzyyqr essz kpj", "small") == "message longer than key"
     assert decrypt("cqywz", "keylongerthanmsg") == "small"
+
+def test_bijectivity():
+    inputs: list[tuple[str, str]] = [
+        ("apple", "passkey"),
+        ("banana", "supersecret"),
+        ("ankunda", "kiremire"),
+        ("andrey", "timofeyev"),
+        ("whales", "cyber"),
+        ("whales are goated", "definitely"),
+        ("whales will win cyberstorm", "withoutasingledoubt"),
+    ]
+
+    for (raw, key) in inputs:
+        assert decrypt(encrypt(raw, key), key) == raw

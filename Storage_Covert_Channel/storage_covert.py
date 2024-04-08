@@ -23,8 +23,8 @@ def add_file(file):
         f_d_list.append(file[:10])
 
 # takes in the permissions list and converts into binary then to acsii value
-def convert_binary(perm_list):
-    binary_list = []
+def convert_ascii(perm_list):
+    ascii_list = []
 
     # parse list if 10-bit method (each permission is not a stand alone char)
     if len(perm_list[0]) == 10:
@@ -39,15 +39,8 @@ def convert_binary(perm_list):
             else:
                 bin += '1'
         # convert to ascii value
-        binary_list.append(int(bin,2))
+        ascii_list.append(chr(int(bin,2)))
 
-    return binary_list
-
-# given a list of ascii values, converts to corresponding chars
-def convert_ascii(bin_list):
-    ascii_list = []
-    for bin in bin_list:
-        ascii_list.append(chr(bin))
     return ascii_list
 
 # used for 10-bit method
@@ -75,12 +68,8 @@ def main():
     ftp.dir(add_file)
     #ftp.dir()
     ftp.close()
-    
-    perm_list = convert_binary(f_d_list)
-    ascii_list = convert_ascii(perm_list)
-
+    ascii_list = convert_ascii(f_d_list)
     message= ''.join(str(char) for char in ascii_list)
-
     # print the generated string (only output)
     print(message)
 main()

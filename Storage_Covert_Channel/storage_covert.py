@@ -72,4 +72,6 @@ def main():
     message= ''.join(str(char) for char in ascii_list)
     # print the generated string (only output)
     print(message)
-main()
+
+if __name__ == "__main__":
+    main()

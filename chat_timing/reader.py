@@ -8,26 +8,32 @@ def to_cov_bin(data: list[float], zero: float, one: float) -> str:
         i += 1
         j += 1
 
+    #mapper = lambda x : "1" if x >= one else "0" if one > zero else lambda x : "0" if x >= zero else "1"
     return "".join(list(map(translate(zero, one), diffs)))
 
-def analyze(data: list[float]) -> tuple[float, float]:
+def analyze(_: list[float]) -> tuple[float, float]:
     """
     Use statistics to figure out likely 0 and 1 delays
     """
     return (0.0,0.0)
 
-# TODO: Look into whether or not zero is required
-# Perhaps it's still needed since you could also 
-# calculate based on which the difference is closer to
-# or you might also need it when denoising
 def translate(zero: float, one: float):
+    """
+    Optimized to return the correct function based on which is set to be higher
+    """
     def aux(diff: float):
         if diff >= one:
             return "1"
         else:
             return "0"
 
-    return aux
+    def aux2(diff: float):
+        if diff >= zero:
+            return "0"
+        else:
+            return "1"
+
+    return aux if one > zero else aux2
 
 def denoise(diffs: list[float]) -> list[float]:
     """
@@ -54,12 +60,14 @@ if __name__ == "__main__":
         sys.stdout.write(data.decode())
         chat_delays.append(time.time())
         sys.stdout.flush()
+    chat_delays.append(time.time()) # Time of EOF message
 
     s.close()
+    sys.stdout.write("\n")
 
     mapped_binary = to_cov_bin(chat_delays, 0.025, 0.1)
     result = "".join([chr(int(mapped_binary[i:i+8], 2)) for i in range(0, len(mapped_binary), 8)])[0:-3]
-    print("\n", result)
+    print(result)
 
     # Also works
     #hex_string = hex(int(mapped_binary, 2))[2:]

@@ -1,5 +1,10 @@
+from typing import Callable
+
 
 def to_cov_bin(data: list[float], zero: float, one: float) -> str:
+    """
+    Converts a list of timestamps into a string of binary
+    """
 
     diffs: list[float] = [0.0] * (len(data)-1)
     i, j = 0, 1
@@ -8,32 +13,13 @@ def to_cov_bin(data: list[float], zero: float, one: float) -> str:
         i += 1
         j += 1
 
-    #mapper = lambda x : "1" if x >= one else "0" if one > zero else lambda x : "0" if x >= zero else "1"
-    return "".join(list(map(translate(zero, one), diffs)))
+    return "".join(list(map(get_translator(zero, one), diffs)))
 
-def analyze(_: list[float]) -> tuple[float, float]:
+def get_translator(zero: float, one: float) -> Callable[[float], str]:
     """
-    Use statistics to figure out likely 0 and 1 delays
+    Optimized to return the correct function based on which is set to be higher.
     """
-    return (0.0,0.0)
-
-def translate(zero: float, one: float):
-    """
-    Optimized to return the correct function based on which is set to be higher
-    """
-    def aux(diff: float):
-        if diff >= one:
-            return "1"
-        else:
-            return "0"
-
-    def aux2(diff: float):
-        if diff >= zero:
-            return "0"
-        else:
-            return "1"
-
-    return aux if one > zero else aux2
+    return (lambda x : "1" if x >= one else "0") if one > zero else (lambda x : "0" if x >= zero else "1")
 
 def denoise(diffs: list[float]) -> list[float]:
     """

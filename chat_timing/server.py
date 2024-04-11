@@ -37,12 +37,15 @@ while True:
     c, addr = s.accept()
 
     print(f"Incoming connection from {addr}")
-    msg = "Some message here"
+    msg = "When the "
+    secret_msg = "I am inside your walls" + "EOF"
+    secret_encoded = "".join([bin(ord(c))[2:].zfill(8) for c in secret_msg])
+    print(secret_encoded)
 
-    for i in msg:
+    for i, ch in enumerate(secret_encoded):
         # needs to be converted to individual bytes to work
-        c.send(i.encode())
-        time.sleep(0.1)
+        c.send(msg[i%len(msg)].encode())
+        time.sleep(ZERO if ch == "0" else ONE)
 
     c.send("EOF".encode())
 

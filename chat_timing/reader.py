@@ -1,21 +1,16 @@
-from dataclasses import dataclass
 
-@dataclass
-class Chat:
-    timestamp: int # milliseconds
-    content: str # most likely irrelevant but storing in case
+def to_cov_bin(data: list[float], zero: float, one: float) -> str:
 
-def to_cov_bin(data: list[Chat], zero: float, one: float) -> str:
-    
-    diffs = [] * len(data)
+    diffs: list[float] = [0.0] * len(data)
     i, j = 0, 1
     while j < len(data):
-        diffs[i] = data[j].timestamp - data[i].timestamp
-        i, j += 1
+        diffs[i] = round(data[j] - data[i], 3)
+        i += 1
+        j += 1
 
     return "".join(list(map(translate(zero, one), diffs)))
 
-def analyze(data: list[Chat]) -> tuple[float, float]:
+def analyze(data: list[float]) -> tuple[float, float]:
     """
     Use statistics to figure out likely 0 and 1 delays
     """
@@ -34,9 +29,45 @@ def translate(zero: float, one: float):
 
     return aux
 
-def denoise(diffs: list[float]) -> diffs[float]:
+def denoise(diffs: list[float]) -> list[float]:
     """
     use statistics to denoise data
     """
     # TODO: Implement
     return diffs
+
+if __name__ == "__main__":
+    import socket
+    import sys
+    import time
+    from binascii import unhexlify
+    ip = "localhost"
+    #ip = "138.47.165.156"
+    port = 1337
+    #port = 31337
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, port))
+
+    chat_delays = []
+
+    while (data := s.recv(4096)).decode().rstrip("\n") != "EOF":
+        sys.stdout.write(data.decode())
+        chat_delays.append(time.time())
+        sys.stdout.flush()
+
+    s.close()
+
+    mapped_binary = to_cov_bin(chat_delays, 0.025, 0.1)
+    hex_string = hex(int(mapped_binary, 2))[2:]
+    if len(hex_string) % 2 != 0:
+        hex_string = '0' + hex_string
+
+    print(hex_string)
+    decoded_bytes = unhexlify(hex_string)
+    print(decoded_bytes)
+
+    decoded_message = decoded_bytes.decode('utf-8')
+
+    print(decoded_message[:-3])
+

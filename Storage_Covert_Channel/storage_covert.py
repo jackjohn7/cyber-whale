@@ -9,7 +9,7 @@ ip_address = '138.47.165.156'
 f_d_list = []
 
 # Method can be either '7' or '10' for 7-bit method and 10-bit method
-METHOD = '7'
+METHOD = '10'
 
 # adds the permissions of each file in the cwd to a list
 def add_file(file):

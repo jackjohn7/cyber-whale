@@ -6,6 +6,7 @@ def encrypt(src: str, key: str) -> str:
 
     The if the key contains non-alpha characters, it will fail (for now)
     """
+    key = key.replace(" ", "").replace("\t", "").replace("\n", "")
     result = ""
     char_count = 0 # using count instead of index cause non-alpha cause problems
     for c in src:
@@ -32,6 +33,7 @@ def decrypt(src: str, key: str) -> str:
 
     The if the key contains non-alpha characters, it will fail (for now)
     """
+    key = key.replace(" ", "").replace("\t", "").replace("\n", "")
     result = ""
     char_count = 0 # using count instead of index cause non-alpha cause problems
     for c in src:

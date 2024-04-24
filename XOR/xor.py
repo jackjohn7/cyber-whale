@@ -1,40 +1,22 @@
 import sys
 
-def read_files(key):
-    with open(key, 'rb') as key_fp:
-        key_data = bytearray(key_fp.read())
-    
-    cypher_data = bytearray(sys.stdin.buffer.read())
-    return key_data, cypher_data
+# take in the message and key. xor_message is a bytearray 
+def xor(message, key):
+    xor_message = bytearray()
+    # xor each bit in message to corresponding bit in key.
+    # if the key is shorter than the message, it is repeated
+    for i in range(len(message)):
+        xor_message.append(message[i] ^ key[i % len(key)])
+    return xor_message
 
-def decrypt(key, cypher):
-    # Convert hexadecimal key to binary for both key and cyphertext
-    key_binary = ""
-    for byte in key:
-        key_binary += format(byte, '08b')
+###### MAIN #######
+# Read key file and adjust "key" or "key2"
+with open("key", "rb") as key_file:
+    key = bytearray(key_file.read())
 
-    cypher_binary = ""
-    for byte in cypher:
-        cypher_binary += format(byte, '08b')
+# Read message from stdin and pass through xor function with key
+text = sys.stdin.buffer.read()
+final = xor(text, key)
 
-    # Perform XOR decryption
-    xored = ""
-    for bit1, bit2 in zip(key_binary, cypher_binary):
-        if bit1 != bit2:
-            xored += "1"
-        else:
-            xored += "0"
-
-    # Convert binary string to ASCII text
-    segments = [xored[i:i+8] for i in range(0, len(xored), 8)]
-    ascii_characters = [int(segment, 2) for segment in segments]
-    decrypted_text = ''.join(chr(ascii) for ascii in ascii_characters)
-    
-    return decrypted_text
-
-##### MAIN ####
-key = "key"
-key_bytes, cypher_bytes = read_files(key)
-
-final = decrypt(key_bytes, cypher_bytes)
-print(final)
+# output the final message
+sys.stdout.buffer.write(final)

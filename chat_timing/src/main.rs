@@ -11,13 +11,13 @@ fn main() {
     let mut timings = Vec::new();
     if let Ok(mut stream) = TcpStream::connect(ip) {
         let mut stdout = std::io::stdout().lock();
+        let mut data = [0; 32];
         loop {
-            let mut data = [0; 32];
             match stream.read(&mut data) {
                 Ok(0) => break,
                 Ok(bytes) => {
                     timings.push(time::Instant::now());
-                    if data[data.len() - 3..data.len()] != [b'E', b'O', b'F'] {
+                    if data[0..bytes] != [b'E', b'O', b'F'] {
                         stdout.write(&data[0..bytes]).unwrap();
                         stdout.flush().unwrap();
                     }

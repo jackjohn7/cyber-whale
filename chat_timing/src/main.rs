@@ -12,13 +12,15 @@ fn main() {
     if let Ok(mut stream) = TcpStream::connect(ip) {
         let mut stdout = std::io::stdout().lock();
         loop {
-            let mut data = [0; 4096];
-            match stream.read(&mut data[0..100]) {
+            let mut data = [0; 32];
+            match stream.read(&mut data) {
                 Ok(0) => break,
                 Ok(bytes) => {
                     timings.push(time::Instant::now());
-                    stdout.write(&data[0..bytes]).unwrap();
-                    stdout.flush().unwrap();
+                    if data[data.len() - 3..data.len()] != [b'E', b'O', b'F'] {
+                        stdout.write(&data[0..bytes]).unwrap();
+                        stdout.flush().unwrap();
+                    }
                 }
                 Err(err) => {
                     println!("{}", err);

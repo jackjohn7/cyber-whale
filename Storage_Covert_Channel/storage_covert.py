@@ -16,7 +16,11 @@ def add_file(file):
 
     # only interest in last 7 bits of permissions
     if METHOD == '7':
-        f_d_list.append(file[3:10])
+
+        # adjust to ignore garbage files in directory
+        if (file[:3] == '---'):
+
+            f_d_list.append(file[3:10])
 
     # only interested in the permissions of each file/directory
     elif METHOD == '10':

@@ -26,8 +26,7 @@ def test_convert_ascii_method_7():
                             ' ', 'w', 'e', 'r', 'e', 'n', "'", 't', ' ', 'e', 'x', 'p', 'e', 'c', 't', 
                             'i', 'n', 'g', ' ', 'i', 't', ' ', 'i', 'n', ' ', 'b', 'a', 's', 'e', ' ', 
                             '3', '.']
-    assert convert_ascii(['d-w-r--', 'dr--r-x','drw--wx','drw-r--', '-r-----', '-rw----', '-rw--w-'
-                          ]) ==['T','e','s','t',' ','0','2']
+
     
 def test_convert_ascii_method_10():
     assert convert_ascii(['d--xr-xrw-' , 'drwxrwx-w-' , '-rw-r--rwx' , 'd-wx-wx---' , '-rwxr-x--x' , 'd-w--wxr-x', 

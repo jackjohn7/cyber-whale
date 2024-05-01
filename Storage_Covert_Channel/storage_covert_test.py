@@ -1,4 +1,4 @@
-from storage_covert import convert_ascii, convert_10_bit
+from storage_covert import convert_ascii
 
 def test_convert_ascii_method_7():
     assert convert_ascii(['x-w-r--', 'xr-x---', 'xr--r-x', 'xrw--w-', 'xr--r-x', '-r-----', 'xr----x', 
@@ -39,7 +39,7 @@ def test_convert_ascii_method_10():
                           'drw-r-x-w-' , '----rw--wx' , 'drw-rwxrwx' , '-r--rwx-wx' , 'd-wx--xrw-' , 'd-wxr--r--',
                           '----r-xr-x' , '-r-xr-x-w-' , '----r--r-x' , '-rw-r--rwx' , '-rw-r-x---' , '--w-r--r-x',
                           'd-wxrwxr-x' , '---xr-xrw-']) == ['M','o','t','i','v','a','t','i','o','n',' ','i','s',
-                            ' ','w','h','a','t','g','e','t','s',' ','y','o','u',' ','s','t','a','r','t','e',
+                            ' ','w','h','a','t',' ','g','e','t','s',' ','y','o','u',' ','s','t','a','r','t','e',
                             'd','.',' ',' ','H','a','b','i','t',' ','i','s',' ','w','h','a','t',' ','k',
                             'e','e','p','s',' ','y','o','u',' ','g','o','i','n','g','.',' ','-','-',' ','J',
                             'i','m',' ','R','o','h','n']

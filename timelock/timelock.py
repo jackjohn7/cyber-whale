@@ -1,6 +1,6 @@
 from datetime import datetime
 import hashlib
-from dateutil import tz
+from pytz import tz
 import glob
 
 # set current time to .now() if not DEBUG

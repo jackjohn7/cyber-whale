@@ -1,12 +1,13 @@
 from datetime import datetime
 import hashlib
-from pytz import tz
-import glob
+import pytz
+import fileinput
 
 # set current time to .now() if not DEBUG
 # epoch must be set via file input
 epoch = ''
-current = datetime.now()
+current = '2013 05 06 07 43 25'
+
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
 DEBUG = True
 
@@ -39,28 +40,25 @@ def retrive_code(hash_str):
 if __name__ == '__main__':
 
     # take in file input
-    files = glob.glob('*.txt')
+    files = fileinput.input()
     for f in files:
 
-        file = open(f, 'r')
-        epoch += file.read()
+        #file = open(f, 'r')
+        epoch += f
+        #file.close()
 
     
     
     # if DEBUG allow current time to be set manually via the command line
-    if DEBUG:
-        try:
-            print("Epoch time: " + epoch + '\n')
-            current = input("current time: ")
-            print('\n')
-        except EOFError:
-            print("Eoferror")
-        current =  datetime.strptime(current, "%Y %m %d %H %M %S")
+    if not DEBUG:
+        current = datetime.now()
+        
+    current =  datetime.strptime(current, "%Y %m %d %H %M %S")
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")
-    epoch = epoch.replace(tzinfo = tz.tzlocal())
-    current = current.replace(tzinfo = tz.tzlocal())
+    epoch = epoch.replace(tzinfo = pytz.UTC)
+    current = current.replace(tzinfo = pytz.UTC)
 
     # calculate time elapsed (in seconds)
     difference = int(abs(epoch - current).total_seconds())

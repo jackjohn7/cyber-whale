@@ -5,17 +5,17 @@ import pytest
 def test_file_not_found():
     with pytest.raises(cli_errors.FileNotFound):
         args = Args()
-        args.parse(["-s", "-b", "-o10", "-i13", "-wtest.jpg"])
+        args.parse(["-r", "-b", "-o10", "-i13", "-wtest.jpg"])
     with pytest.raises(cli_errors.FileNotFound):
         args = Args()
-        args.parse(["-s", "-b", "-o10", "-i13", "-htest.jpg"])
+        args.parse(["-r", "-b", "-o10", "-i13", "-htest.jpg", "-wREADME.md"])
 def test_bad_param():
     with pytest.raises(cli_errors.InvalidParam):
         args = Args()
-        args.parse(["-s", "-b", "-oinvalid", "-i13", "-wsteg/steg.py"])
+        args.parse(["-r", "-b", "-oinvalid", "-i13", "-wsteg/steg.py"])
     with pytest.raises(cli_errors.InvalidParam):
         args = Args()
-        args.parse(["-s", "-b", "-o10", "-iinvalid", "-wsteg/steg.py"])
+        args.parse(["-r", "-b", "-o10", "-iinvalid", "-wsteg/steg.py"])
 
 def test_mutual_exclusion():
     with pytest.raises(cli_errors.TooManyModesSpecified):

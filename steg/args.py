@@ -34,7 +34,7 @@ class Args:
         interval  = {self.interval}"""
 
     def validate(self):
-        if self.action is None or self.data_mode is None:
+        if self.action is None or self.data_mode is None or self.wrapper is None:
             raise cli_errors.InvalidConfiguration(str(self))
 
     def parse(self, args: list[str]):
@@ -44,6 +44,8 @@ class Args:
                     raise cli_errors.TooManyModesSpecified("action")
                 case ['-', 's'] if self.action is None:
                     self.action = "store"
+                case ['-', 'r'] if self.action is None:
+                    self.action = "retrieve"
                 case ['-', 'b'] | ['-', 'B'] if self.data_mode is not None:
                     raise cli_errors.TooManyModesSpecified("data")
                 case ['-', 'b'] if self.data_mode is None:

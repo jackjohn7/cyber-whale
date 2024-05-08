@@ -14,7 +14,7 @@ DEBUG = True
 # given hash_str --> formulates four-character code with
 # first two letters from left-to-right 
 # first two numbers from right-to-left
-def retrive_code(hash_str):
+def retreive_code(hash_str):
     code = ''
     char_count = 2
 

@@ -74,7 +74,7 @@ if __name__ == '__main__':
         print("hash_str: " + hash_str + '\n')
 
     # retrieve the code from hash_str
-    code = retrive_code(hash_str)
+    code = retreive_code(hash_str)
 
     print(code + '\n')
     

@@ -74,6 +74,9 @@ class Args:
                     self.hidden = "".join(hidden)
                     if not os.path.isfile(self.hidden):
                         raise cli_errors.FileNotFound(self.wrapper, "hidden")
+                case e:
+                    arg = "".join(e)
+                    raise cli_errors.UnrecognizedArgument(arg)
 
 
         self.validate()

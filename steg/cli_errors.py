@@ -9,8 +9,7 @@ def usage(file_name: str) -> str:
        -b      bit mode
        -B      byte mode
        -o<val> set offset to <val> (default is 0)
-       -i<val> set interval to <val> (default is 1)
-       -w<val> set wrapper file to <val>
+       -i<val> set interval to <val> (default is 1) -w<val> set wrapper file to <val>
        -h<val> set hidden file to <val>"""
 
 class CliError(Exception):
@@ -54,3 +53,10 @@ class FileNotFound(CliError):
     def __str__(self):
         return f"ERR: File {self.filename} provided for {self.provided_for} was not found"
 
+class UnrecognizedArgument(CliError):
+    argument: str
+    def __init__(self, argument: str):
+        self.argument = argument
+
+    def __str__(self):
+        return f"ERR: Unrecognized argument \"{self.argument}\" provided"

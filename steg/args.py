@@ -9,11 +9,17 @@ class Args:
     they are showed in the assignment description document.
     """
     action: Optional[Literal["retrieve", "store"]]
+    """Specifies which action the user wants to perform"""
     data_mode: Optional[Literal["bit", "byte"]]
+    """Specifies whether the user wants to work with bits or bytes"""
     offset = 0
+    """Specifies the offset the user wants to begin writing/retrieving from (distance from beginning)"""
     interval = 1
+    """Specifies the distance between each bit/byte"""
     wrapper: Optional[str]
+    """Specifies the file that the message will be hidden inside"""
     hidden: Optional[str]
+    """Specifies what message will be hidden"""
 
     def __init__(self):
         self.action = None

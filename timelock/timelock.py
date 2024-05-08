@@ -44,16 +44,17 @@ if __name__ == '__main__':
     for f in files:
 
         #file = open(f, 'r')
-        epoch += f
+        epoch += f.strip()
         #file.close()
 
     
     
     # if DEBUG allow current time to be set manually via the command line
-    if not DEBUG:
-        current = datetime.now()
+    if DEBUG:
+        current =  datetime.strptime(current, "%Y %m %d %H %M %S")
         
-    current =  datetime.strptime(current, "%Y %m %d %H %M %S")
+    else:
+        current = datetime.now()
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")

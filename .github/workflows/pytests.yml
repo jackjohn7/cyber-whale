@@ -37,8 +37,6 @@ jobs:
       # Runs all tests
       - name: Test with Pytest
         run: pytest
-      - name: pytz
-        run: pytz
       # Checks for silly, preventable mistakes
       - name: Lint with Ruff
         run: ruff check

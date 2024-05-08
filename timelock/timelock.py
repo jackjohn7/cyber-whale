@@ -14,7 +14,7 @@ DEBUG = True
 # given hash_str --> formulates four-character code with
 # first two letters from left-to-right 
 # first two numbers from right-to-left
-def retreive_code(hash_str):
+def retrieve_code(hash_str):
     code = ''
     char_count = 2
 
@@ -36,6 +36,13 @@ def retreive_code(hash_str):
             break
         i += 1
     return code
+
+def get_time_elapsed(epoch, current):
+    # calculate time elapsed (in seconds)
+    difference = int(abs(epoch - current).total_seconds())
+    difference -= difference%60 # top of the minute
+
+    return difference
 
 if __name__ == '__main__':
 
@@ -61,9 +68,7 @@ if __name__ == '__main__':
     epoch = epoch.replace(tzinfo = pytz.UTC)
     current = current.replace(tzinfo = pytz.UTC)
 
-    # calculate time elapsed (in seconds)
-    difference = int(abs(epoch - current).total_seconds())
-    difference -= difference%60 # top of the minute
+    difference = get_time_elapsed(epoch, current)
 
     # generate hash_str using md5
     hash_str = hashlib.md5(hashlib.md5(str(difference).encode()).hexdigest().encode()).hexdigest()
@@ -74,7 +79,7 @@ if __name__ == '__main__':
         print("hash_str: " + hash_str + '\n')
 
     # retrieve the code from hash_str
-    code = retreive_code(hash_str)
+    code = retrieve_code(hash_str)
 
     print(code + '\n')
     

@@ -9,7 +9,7 @@ if __name__ == "__main__":
     args = Args()
 
     try:
-        args.parse()
+        args.parse(argv[1:])
 
     except cli_errors.CliError as e:
         print(e)

@@ -37,8 +37,8 @@ class Args:
         if self.action is None or self.data_mode is None:
             raise cli_errors.InvalidConfiguration(str(self))
 
-    def parse(self):
-        for arg in argv[1:]:
+    def parse(self, args: list[str]):
+        for arg in args:
             match [*arg]:
                 case ['-', 's'] | ['-', 'r'] if self.action is not None:
                     raise cli_errors.TooManyModesSpecified("action")

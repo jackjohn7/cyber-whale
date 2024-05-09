@@ -36,6 +36,9 @@ class Args:
     def validate(self):
         if self.action is None or self.data_mode is None or self.wrapper is None:
             raise cli_errors.InvalidConfiguration(str(self))
+        if self.action == "retrieve" and self.hidden is not None:
+            print(f"retrieve and hidden cannot both be set")
+            raise cli_errors.InvalidConfiguration(str(self))
 
     def parse(self, args: list[str]):
         for arg in args:

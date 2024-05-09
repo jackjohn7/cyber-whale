@@ -1,6 +1,6 @@
 from datetime import datetime
 import hashlib
-import pytz
+from pytz import UTC
 import fileinput
 
 # set current time to .now() if not DEBUG
@@ -65,8 +65,8 @@ if __name__ == '__main__':
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")
-    epoch = epoch.replace(tzinfo = pytz.UTC)
-    current = current.replace(tzinfo = pytz.UTC)
+    epoch = epoch.replace(tzinfo = UTC)
+    current = current.replace(tzinfo = UTC)
 
     difference = get_time_elapsed(epoch, current)
 

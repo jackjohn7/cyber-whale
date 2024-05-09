@@ -1,6 +1,6 @@
 from timelock import retrieve_code, get_time_elapsed
 import datetime
-import pytz
+from pytz import UTC
 
 def test_valid_hash_string():
     assert retrieve_code('3ee1df13bc19a968b89629c749fee39d') == 'ee93'

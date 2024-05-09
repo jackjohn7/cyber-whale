@@ -1,5 +1,5 @@
 from timelock import retrieve_code, get_time_elapsed
-import datetime
+from datetime import datetime
 from pytz import UTC
 
 def test_valid_hash_string():

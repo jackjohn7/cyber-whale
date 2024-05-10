@@ -1,15 +1,15 @@
 from datetime import datetime
 import hashlib
-from pytz import UTC
+from pytz import timezone
 import fileinput
 
 # set current time to .now() if not DEBUG
 # epoch must be set via file input
 epoch = ''
-current = '2013 05 06 07 43 25'
+current = '2017 03 23 18 02 06'
 
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
-DEBUG = True
+DEBUG = False
 
 # given hash_str --> formulates four-character code with
 # first two letters from left-to-right 
@@ -61,12 +61,12 @@ if __name__ == '__main__':
         current =  datetime.strptime(current, "%Y %m %d %H %M %S")
         
     else:
-        current = datetime.now()
+        current = datetime.now(timezone('UTC'))
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")
-    epoch = epoch.replace(tzinfo = UTC)
-    current = current.replace(tzinfo = UTC)
+    epoch = epoch.astimezone(timezone('UTC'))
+    current = current.astimezone(timezone('UTC'))
 
     difference = get_time_elapsed(epoch, current)
 

@@ -39,7 +39,7 @@ def retrieve_code(hash_str):
     return code
 
 def find_y(hash_str):
-    return hash_str[int(len(hash_str))]
+    return hash_str[int(len(hash_str)/2)]
 
 def get_time_elapsed(epoch, current):
     # calculate time elapsed (in seconds)

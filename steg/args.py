@@ -60,14 +60,14 @@ class Args:
                     try:
                         offset = int(val)
                         self.offset = offset
-                    except:
+                    except Exception as _:
                         raise cli_errors.InvalidParam(val, "offset")
                 case ['-', 'i', *rest]:
                     val = "".join(rest)
                     try:
                         interval = int(val)
                         self.interval = interval
-                    except:
+                    except Exception as _:
                         raise cli_errors.InvalidParam(val, "interval")
                 case ['-', 'w', *wrapper]:
                     # validate that file exists

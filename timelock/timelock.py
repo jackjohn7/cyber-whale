@@ -2,6 +2,7 @@ from datetime import datetime
 import hashlib
 from pytz import timezone
 import fileinput
+import math
 
 # set current time to .now() if not DEBUG
 # epoch must be set via file input
@@ -10,6 +11,7 @@ current = '2017 03 23 18 02 06'
 
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
 DEBUG = False
+utc = timezone('UTC')
 
 # given hash_str --> formulates four-character code with
 # first two letters from left-to-right 
@@ -43,7 +45,8 @@ def get_time_elapsed(epoch, current):
     difference -= difference%60 # top of the minute
 
     return difference
-
+def find_y(hash_str):
+    return hash_str[math.floor(len(hash_str)/2)]
 if __name__ == '__main__':
 
     # take in file input
@@ -61,12 +64,12 @@ if __name__ == '__main__':
         current =  datetime.strptime(current, "%Y %m %d %H %M %S")
         
     else:
-        current = datetime.now(timezone('UTC'))
+        current = datetime.now(utc)
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")
-    epoch = epoch.astimezone(timezone('UTC'))
-    current = current.astimezone(timezone('UTC'))
+    epoch = epoch.astimezone(utc)
+    current = current.astimezone(utc)
 
     difference = get_time_elapsed(epoch, current)
 
@@ -82,6 +85,7 @@ if __name__ == '__main__':
     code = retrieve_code(hash_str)
 
     print(code + '\n')
+    print(code + find_y(hash_str))
     
        
             

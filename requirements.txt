@@ -4,3 +4,9 @@ pytest-cov
 
 # Linter
 ruff
+
+# timelock
+pytz
+
+# steg
+filetype

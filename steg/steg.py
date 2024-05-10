@@ -96,11 +96,13 @@ class StegBit(Steg):
         # read data from hidden file until sentinel or wrapper EOF
         while offset < len(w):
             b = 0
-            for j in range(8):
-                b <<= 1
+            j = 0
+            while j < 8 and offset < len(w):
                 b |= w[offset] & 0b00000001
                 if j < 7:
+                    b = (b << 1) & (2 ** 8 - 1)
                     offset += self.interval
+                j += 1
             if h[-len(SENTINEL):] == SENTINEL:
                 logger.debug("encountered sentinel")
                 h = h[:-len(SENTINEL)]

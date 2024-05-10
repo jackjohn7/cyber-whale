@@ -10,6 +10,7 @@ current = '2013 05 06 07 43 25'
 
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
 DEBUG = True
+CHALLENGE = True
 
 # given hash_str --> formulates four-character code with
 # first two letters from left-to-right 
@@ -36,6 +37,9 @@ def retrieve_code(hash_str):
             break
         i += 1
     return code
+
+def find_y(hash_str):
+    return hash_str[len(hash_str)]
 
 def get_time_elapsed(epoch, current):
     # calculate time elapsed (in seconds)
@@ -82,7 +86,8 @@ if __name__ == '__main__':
     code = retrieve_code(hash_str)
 
     print(code + '\n')
-    
+    if CHALLENGE:
+        print(find_y(hash_str))
        
             
 

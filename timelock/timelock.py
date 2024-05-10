@@ -6,10 +6,10 @@ import fileinput
 # set current time to .now() if not DEBUG
 # epoch must be set via file input
 epoch = ''
-current = '2013 05 06 07 43 25'
+current = '2017 04 23 18 02 30'
 
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
-DEBUG = True
+DEBUG = False
 CHALLENGE = True
 
 # given hash_str --> formulates four-character code with
@@ -43,9 +43,15 @@ def find_y(hash_str):
 
 def get_time_elapsed(epoch, current):
     # calculate time elapsed (in seconds)
+    if DEBUG == True:
+        print("epoch (s):" + str(epoch.timestamp()))
+        print("current (s): " + str(current.timestamp()))
+        print("difference (s):" + str(current.timestamp() - epoch.timestamp()))
+
     difference = int(abs(epoch - current).total_seconds())
     difference -= difference%60 # top of the minute
-
+    
+    print(difference)
     return difference
 
 if __name__ == '__main__':
@@ -69,10 +75,17 @@ if __name__ == '__main__':
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")
+    if DEBUG == True:
+        print(epoch)
     epoch = epoch.replace(tzinfo = UTC)
     current = current.replace(tzinfo = UTC)
+    if DEBUG == True:
+        print("epoch:")
+        print(epoch)
+        print("current:")
+        print(current)
 
-    difference = get_time_elapsed(epoch, current)
+    difference = get_time_elapsed(epoch, current) - 3600
 
     # generate hash_str using md5
     hash_str = hashlib.md5(hashlib.md5(str(difference).encode()).hexdigest().encode()).hexdigest()

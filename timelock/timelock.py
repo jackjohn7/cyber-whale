@@ -1,16 +1,17 @@
 from datetime import datetime
 import hashlib
-from pytz import UTC
+from pytz import timezone
 import fileinput
+import math
 
 # set current time to .now() if not DEBUG
 # epoch must be set via file input
 epoch = ''
-current = '2017 04 23 18 02 30'
+current = '2017 03 23 18 02 06'
 
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
 DEBUG = False
-CHALLENGE = True
+utc = timezone('UTC')
 
 # given hash_str --> formulates four-character code with
 # first two letters from left-to-right 
@@ -38,22 +39,14 @@ def retrieve_code(hash_str):
         i += 1
     return code
 
-def find_y(hash_str):
-    return hash_str[int(len(hash_str)/2)]
-
 def get_time_elapsed(epoch, current):
     # calculate time elapsed (in seconds)
-    if DEBUG == True:
-        print("epoch (s):" + str(epoch.timestamp()))
-        print("current (s): " + str(current.timestamp()))
-        print("difference (s):" + str(current.timestamp() - epoch.timestamp()))
-
     difference = int(abs(epoch - current).total_seconds())
     difference -= difference%60 # top of the minute
-    
-    print(difference)
-    return difference
 
+    return difference
+def find_y(hash_str):
+    return hash_str[math.floor(len(hash_str)/2)]
 if __name__ == '__main__':
 
     # take in file input
@@ -71,21 +64,14 @@ if __name__ == '__main__':
         current =  datetime.strptime(current, "%Y %m %d %H %M %S")
         
     else:
-        current = datetime.now()
+        current = datetime.now(utc)
         
     # handle DST by converting datetime objects to datetime onjects in local timezone
     epoch = datetime.strptime(epoch, "%Y %m %d %H %M %S")
-    if DEBUG == True:
-        print(epoch)
-    epoch = epoch.replace(tzinfo = UTC)
-    current = current.replace(tzinfo = UTC)
-    if DEBUG == True:
-        print("epoch:")
-        print(epoch)
-        print("current:")
-        print(current)
+    epoch = epoch.astimezone(utc)
+    current = current.astimezone(utc)
 
-    difference = get_time_elapsed(epoch, current) - 3600
+    difference = get_time_elapsed(epoch, current)
 
     # generate hash_str using md5
     hash_str = hashlib.md5(hashlib.md5(str(difference).encode()).hexdigest().encode()).hexdigest()
@@ -99,8 +85,8 @@ if __name__ == '__main__':
     code = retrieve_code(hash_str)
 
     print(code + '\n')
-    if CHALLENGE:
-        print(find_y(hash_str))
+    print(code + find_y(hash_str))
+    
        
             
 

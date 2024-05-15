@@ -90,19 +90,17 @@ fn main() -> Result<(), String> {
 
 /// Creates mapping closure given a one and zero value
 fn mapper(one: u128, zero: u128, split: u128) -> impl for<'a> Fn(&'a u128) -> char {
-    return move |x: &u128| {
+    move |x: &u128| {
         if one > zero {
-            if x.clone() > split {
+            if *x > split {
                 '1'
             } else {
                 '0'
             }
+        } else if *x > split {
+            '0'
         } else {
-            if x.clone() > split {
-                '0'
-            } else {
-                '1'
-            }
+            '1'
         }
-    };
+    }
 }

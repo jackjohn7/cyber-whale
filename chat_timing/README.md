@@ -149,4 +149,8 @@ keys will alter the values used in decoding the message and would
 allow the user to tweak these values on the fly while remaining
 in the comfort of their terminal. This could be done with
 relative ease using Tauri. Enabled with `--tui` flag.
+- [ ] Modes that would allow a user to get delays from other
+types of sources (not TCP).
+- [ ] Allow the ingestion of predefined delay-data in the format 
+JSON or stringified array for analysis.
 

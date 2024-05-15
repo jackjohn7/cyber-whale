@@ -2,12 +2,11 @@ from datetime import datetime
 import hashlib
 from pytz import timezone
 import fileinput
-import math
 
 # set current time to .now() if not DEBUG
 # epoch must be set via file input
 epoch = ''
-current = '2017 03 23 18 02 06'
+current = '2010 06 13 12 55 34'
 
 #current = datetime.strptime(current, "%Y %m %d %H %M %S")
 DEBUG = False
@@ -45,8 +44,7 @@ def get_time_elapsed(epoch, current):
     difference -= difference%60 # top of the minute
 
     return difference
-def find_y(hash_str):
-    return hash_str[math.floor(len(hash_str)/2)]
+
 if __name__ == '__main__':
 
     # take in file input
@@ -77,15 +75,15 @@ if __name__ == '__main__':
     hash_str = hashlib.md5(hashlib.md5(str(difference).encode()).hexdigest().encode()).hexdigest()
 
     # if DEBUG print total seconds and the generated hash string
-    if DEBUG:
-        print("Total_seconds: " + str(difference) + '\n')
-        print("hash_str: " + hash_str + '\n')
+    # if DEBUG:
+    #     print("Total_seconds: " + str(difference) + '\n')
+    #     print("hash_str: " + hash_str + '\n')
 
     # retrieve the code from hash_str
     code = retrieve_code(hash_str)
 
     print(code + '\n')
-    print(code + find_y(hash_str))
+    
     
        
             

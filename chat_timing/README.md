@@ -132,3 +132,21 @@ I remove any EOF sequence since it shouldn't be printed.
 The result of all this computation is assigned to `hidden_msg`. We 
 print this to stdout with the `println!` macro.
 
+# Potential Improvements
+
+- [X] CLI argument parsing
+- [ ] CLI options allowing user to specify a split and which
+value is higher (ONE or ZERO). I think this configuration method
+would translate easier to a responsive GUI.
+- [ ] A GUI where a user could see a graphical view that would
+allow them to filter out ranges of delays similar to EQ would
+be sick. It could also allow the user to change their ONE-ZERO or
+SPLIT value on the fly and watch the hidden message change in real
+time. This could be implemented using Tauri or Egui with relative
+ease. This would be enabled with `--gui` flag.
+- [ ] A TUI interface enabling some of the features above. Using
+keys will alter the values used in decoding the message and would
+allow the user to tweak these values on the fly while remaining
+in the comfort of their terminal. This could be done with
+relative ease using Tauri. Enabled with `--tui` flag.
+
